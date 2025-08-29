@@ -18,7 +18,9 @@
             transition: all 0.3s ease-in-out;
         }
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -73,7 +75,7 @@
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-4xl mx-auto">
         <div class="card">
-            <img src="https://raw.githubusercontent.com/alexdovale/calculo-mensuracao-dperj-codoc/main/logo%20(2).png" alt="Logo Defensoria Pública" class="mx-auto h-16 w-auto mb-6">
+            <img src="https://raw.githubusercontent.com/alexdovale/calculo-mensuracao-dperj-codoc/main/logo%20(2).png" alt="Logo da Defensoria Pública" class="mx-auto h-16 w-auto mb-6">
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Calculadora de Acervo Documental</h1>
             <p class="text-center text-gray-500 mb-8">Adicione as medições para calcular a metragem linear total do seu acervo.</p>
 
@@ -82,7 +84,7 @@
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <!-- Card Caixa-Arquivo -->
                     <div class="border p-4 rounded-lg bg-gray-50 flex flex-col">
-                        <h3 class="font-semibold text-lg mb-3 text-gray-700">Documentos em Caixa-Arquivo</h3>
+                        <h3 class="font-semibold text-lg mb-3 text-gray-700 text-center">Documentos em Caixa-Arquivo</h3>
                         <div class="space-y-3 flex-grow">
                             <input type="number" id="num-caixas" class="input-field" placeholder="Nº de caixas-arquivo">
                             <button onclick="addCaixa()" class="btn btn-primary w-full">Adicionar</button>
@@ -94,13 +96,13 @@
                     </div>
                     <!-- Card Pilhas -->
                     <div class="border p-4 rounded-lg bg-gray-50 flex flex-col">
-                        <h3 class="font-semibold text-lg mb-3 text-gray-700">Documentos em Pilha</h3>
+                        <h3 class="font-semibold text-lg mb-3 text-gray-700 text-center">Documentos em Pilha</h3>
                         <div class="space-y-3 flex-grow">
                             <input type="number" id="altura-pilha" class="input-field" placeholder="Altura da pilha (cm)">
                             <button onclick="addPilha()" class="btn btn-primary w-full">Adicionar</button>
                              <div class="instruction-box">
-                                <p><b>Quando utilizar?</b><br>Quando os documentos estiverem organizados em pilhas.</p>
-                                <p class="mt-1"><b>Como utilizar?</b><br>1º Meça a altura da pilha em cm.<br>2º Insira o valor no campo.<br>3º Clique em Adicionar.</p>
+                                <p><b>Quando utilizar?</b><br>Para documentos que não estão em caixas. Ex: processos, pastas, livros, maços e papéis soltos.</p>
+                                <p class="mt-1"><b>Como utilizar?</b><br>1º Junte os itens e meça a altura da pilha em cm.<br>2º Insira o valor no campo.<br>3º Clique em Adicionar.</p>
                             </div>
                         </div>
                     </div>
@@ -124,7 +126,16 @@
                  </div>
                  <div class="mt-6 border-t pt-4 text-center">
                      <p class="text-gray-600">Medida Total do Acervo</p>
-                     <p id="total-geral" class="text-4xl font-extrabold text-gray-800">0.00 m</p>
+                     <div class="flex items-center justify-center gap-2">
+                        <p id="total-geral" class="text-3xl font-extrabold text-gray-800">0.00 metros lineares</p>
+                        <button id="copy-button" onclick="copyResult()" class="btn btn-secondary" title="Copiar resultado">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard mr-2" viewBox="0 0 16 16">
+                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                            </svg>
+                            <span>Copiar</span>
+                        </button>
+                     </div>
                  </div>
             </div>
 
@@ -133,12 +144,20 @@
                 <button onclick="undoLastAddition()" class="btn btn-secondary">Desfazer Última Adição</button>
                 <button onclick="zerarCalculo()" class="btn btn-danger">Zerar Cálculo</button>
             </div>
-
+            
             <!-- Seção de Instrução Final -->
             <div id="instruction-section" class="mt-6 text-center bg-yellow-100 text-yellow-800 p-4 rounded-lg hidden">
                 <p class="font-semibold">*** INSTRUÇÃO ***</p>
-                <p id="instruction-text">Lembre-se de adicionar o valor em metros lineares (0.00 m) no campo 'Mensuração Total' da sua Listagem de Eliminação de Documentos.</p>
+                <p id="instruction-text">Lembre-se de adicionar o valor em metros lineares (0.00) no campo 'Mensuração Total' da sua Listagem de Eliminação de Documentos.</p>
             </div>
+
+            <!-- Rodapé -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 text-center text-xs text-gray-500">
+                <p class="font-semibold">Defensoria Pública do Estado do Rio de Janeiro</p>
+                <p>Sede Administrativa - Coordenação de Gestão Documental</p>
+                <p>Email: codoc@defensoria.rj.def.br</p>
+                <p>Avenida Marechal Câmara, 314 - CEP 20020-080 - Centro, RJ</p>
+            </footer>
         </div>
     </div>
 
@@ -172,7 +191,7 @@
             const medidaMetros = (caixas * LARGURA_CAIXA_ARQUIVO_CM) / 100;
             totalMetrosCaixas += medidaMetros;
             totalCaixas += caixas;
-
+            
             lastAddition = { type: 'caixa', metros: medidaMetros, count: caixas };
 
             showMessage(`Adicionado: ${medidaMetros.toFixed(2)} m e ${caixas} caixas.`);
@@ -228,24 +247,48 @@
             showMessage('Cálculo zerado com sucesso.', 'success');
             updateSummary();
         }
+        
+        function copyResult() {
+            const totalGeral = totalMetrosCaixas + totalMetrosPilhas;
+            const textToCopy = `${totalGeral.toFixed(2)} metros lineares`;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showMessage(`Resultado "${textToCopy}" copiado para a área de transferência!`);
+            } catch (err) {
+                showMessage('Não foi possível copiar o texto.', 'error');
+            }
+            document.body.removeChild(textArea);
+        }
 
         function updateSummary() {
             document.getElementById('total-caixas').textContent = totalCaixas;
             document.getElementById('metros-caixas').textContent = `${totalMetrosCaixas.toFixed(2)} metros lineares`;
-
+            
             document.getElementById('total-pilhas').textContent = totalPilhas;
             document.getElementById('metros-pilhas').textContent = `${totalMetrosPilhas.toFixed(2)} metros lineares`;
 
             const totalGeral = totalMetrosCaixas + totalMetrosPilhas;
-            document.getElementById('total-geral').textContent = `${totalGeral.toFixed(2)} m`;
-
+            document.getElementById('total-geral').textContent = `${totalGeral.toFixed(2)} metros lineares`;
+            
+            const copyButton = document.getElementById('copy-button');
             if (totalGeral > 0) {
+                copyButton.style.display = 'inline-flex';
                 document.getElementById('instruction-section').classList.remove('hidden');
-                document.getElementById('instruction-text').textContent = `Lembre-se de adicionar o valor em metros lineares (${totalGeral.toFixed(2)} m) no campo 'Mensuração Total' da sua Listagem de Eliminação de Documentos.`;
+                document.getElementById('instruction-text').textContent = `Lembre-se de adicionar o valor em metros lineares (${totalGeral.toFixed(2)}) no campo 'Mensuração Total' da sua Listagem de Eliminação de Documentos.`;
             } else {
+                copyButton.style.display = 'none';
                 document.getElementById('instruction-section').classList.add('hidden');
             }
         }
+        
+        // Initial state for copy button
+        document.getElementById('copy-button').style.display = 'none';
     </script>
 </body>
 </html>
