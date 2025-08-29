@@ -71,6 +71,109 @@
             background-color: #f9fafb;
             border-radius: 0.25rem;
         }
+
+        /* --- Estilos do Fluxograma Linha do Tempo Vertical --- */
+        .timeline-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #e5e7eb; /* gray-200 */
+            top: 15px;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -2px;
+        }
+        .timeline-step {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+        /* Círculo na linha do tempo */
+        .timeline-step::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            right: -12px;
+            background-color: white;
+            border: 4px solid;
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        /* Steps à esquerda */
+        .timeline-step.left {
+            left: 0;
+        }
+        /* Steps à direita */
+        .timeline-step.right {
+            left: 50%;
+        }
+        .timeline-step.right::after {
+            left: -12px;
+        }
+        .timeline-content {
+            padding: 1rem;
+            background-color: #f9fafb; /* gray-50 */
+            position: relative;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+         .timeline-content h3 {
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+         }
+         .timeline-content p {
+            font-size: 0.875rem;
+            line-height: 1.4;
+            color: #4b5563; /* gray-600 */
+         }
+        .timeline-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+
+        /* Cores dos Passos */
+        .timeline-step:nth-child(1)::after { border-color: #6366f1; } .timeline-step:nth-child(1) h3 { color: #6366f1; }
+        .timeline-step:nth-child(2)::after { border-color: #7c3aed; } .timeline-step:nth-child(2) h3 { color: #7c3aed; }
+        .timeline-step:nth-child(3)::after { border-color: #9333ea; } .timeline-step:nth-child(3) h3 { color: #9333ea; }
+        .timeline-step:nth-child(4)::after { border-color: #c026d3; } .timeline-step:nth-child(4) h3 { color: #c026d3; }
+        .timeline-step:nth-child(5)::after { border-color: #db2777; } .timeline-step:nth-child(5) h3 { color: #db2777; }
+        .timeline-step:nth-child(6)::after { border-color: #e11d48; } .timeline-step:nth-child(6) h3 { color: #e11d48; }
+        .timeline-step:nth-child(7)::after { border-color: #ea580c; } .timeline-step:nth-child(7) h3 { color: #ea580c; }
+        .timeline-step:nth-child(8)::after { border-color: #d97706; } .timeline-step:nth-child(8) h3 { color: #d97706; }
+        .timeline-step:nth-child(9)::after { border-color: #ca8a04; } .timeline-step:nth-child(9) h3 { color: #ca8a04; }
+        .timeline-step:nth-child(10)::after { border-color: #65a30d; } .timeline-step:nth-child(10) h3 { color: #65a30d; }
+        .timeline-step:nth-child(11)::after { border-color: #16a34a; } .timeline-step:nth-child(11) h3 { color: #16a34a; }
+
+        /* Responsividade para telas pequenas */
+        @media screen and (max-width: 768px) {
+            .timeline-container::after {
+                left: 25px;
+            }
+            .timeline-step {
+                width: 100%;
+                padding-left: 60px;
+                padding-right: 15px;
+            }
+            .timeline-step.left, .timeline-step.right {
+                left: 0;
+                margin-bottom: 1rem;
+            }
+            .timeline-step::after {
+                left: 13px;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
@@ -128,14 +231,14 @@
                  <div class="mt-6 border-t pt-4 text-center">
                      <p class="text-gray-600">Medida Total do Acervo</p>
                      <div class="flex items-center justify-center gap-2">
-                        <p id="total-geral" class="text-3xl font-extrabold text-gray-800">0.00 metros lineares</p>
-                        <button id="copy-button" onclick="copyResult()" class="btn btn-secondary" title="Copiar resultado">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard mr-2" viewBox="0 0 16 16">
-                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                            </svg>
-                            <span>Copiar</span>
-                        </button>
+                         <p id="total-geral" class="text-3xl font-extrabold text-gray-800">0.00 metros lineares</p>
+                         <button id="copy-button" onclick="copyResult()" class="btn btn-secondary" title="Copiar resultado">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard mr-2" viewBox="0 0 16 16">
+                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                             </svg>
+                             <span>Copiar</span>
+                         </button>
                      </div>
                  </div>
             </div>
@@ -150,6 +253,123 @@
             <div id="instruction-section" class="mt-6 text-center bg-yellow-100 text-yellow-800 p-4 rounded-lg hidden">
                 <p class="font-semibold">*** INSTRUÇÃO ***</p>
                 <p id="instruction-text">Lembre-se de adicionar o valor em metros lineares (0.00) no campo 'Mensuração Total' da sua Listagem de Eliminação de Documentos.</p>
+            </div>
+
+            <!-- Seção do Fluxograma -->
+            <div class="mt-10 pt-6 border-t border-gray-200">
+                <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Fluxo de Eliminação de Documentos</h2>
+                <div class="timeline-container">
+                    <!-- Passo 1 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                1. Processo
+                            </h3>
+                            <p>Abertura e formalização do processo administrativo para eliminação.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 2 -->
+                    <div class="timeline-step right">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                2. Comunicação Interna
+                            </h3>
+                            <p>Consulta aos setores produtores sobre o interesse nos documentos.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 3 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                3. Listagem de Eliminação
+                            </h3>
+                            <p>Elaboração da lista detalhada dos documentos a serem eliminados.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 4 -->
+                    <div class="timeline-step right">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                4. Certidão de Coleta
+                            </h3>
+                            <p>Emissão do documento que certifica o recolhimento dos materiais.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 5 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
+                                5. Publicação da Listagem
+                            </h3>
+                            <p>Divulgação oficial da listagem para conhecimento público.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 6 -->
+                    <div class="timeline-step right">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                                6. Certidão de Eliminação
+                            </h3>
+                            <p>Documento que atesta a efetiva destruição dos documentos.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 7 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584C18.354 5.166 18 6.518 18 8a3 3 0 01-3 3H6.461A2.121 2.121 0 005.436 13.683z"></path></svg>
+                                7. Edital de Ciência
+                            </h3>
+                            <p>Elaboração do edital que informa sobre a eliminação futura.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 8 -->
+                    <div class="timeline-step right">
+                        <div class="timeline-content">
+                           <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
+                                8. Publicação do Edital
+                            </h3>
+                            <p>Divulgação do edital em meio oficial para dar publicidade ao ato.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 9 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                9. Termo de Eliminação
+                            </h3>
+                            <p>Criação do termo final que registra o descarte dos documentos.</p>
+                        </div>
+                    </div>
+                     <!-- Passo 10 -->
+                    <div class="timeline-step right">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
+                                10. Publicação do Termo
+                            </h3>
+                            <p>Divulgação do termo de eliminação para transparência e registro.</p>
+                        </div>
+                    </div>
+                    <!-- Passo 11 -->
+                    <div class="timeline-step left">
+                        <div class="timeline-content">
+                            <h3>
+                                <svg class="timeline-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                11. Encerramento
+                            </h3>
+                            <p>Finalização e arquivamento do processo administrativo de eliminação.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Rodapé -->
@@ -293,3 +513,4 @@
     </script>
 </body>
 </html>
+
